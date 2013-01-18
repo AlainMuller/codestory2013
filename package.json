@@ -25,5 +25,8 @@
   "devDependencies": {
     "mocha": "",
     "should": ""
+  },
+  "bin": { 
+    "change": "./bin/change" 
   }
 }
