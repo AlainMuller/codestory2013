@@ -1,0 +1,24 @@
+{
+  "name": "codestory2013",
+  "version": "0.0.1",
+  "description": "Le serveur (node.js) représentant ma participation au concours CodeStory 2013",
+  "main": "lib/main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlainMuller/codestory2013.git"
+  },
+  "keywords": [
+    "codestory",
+    "2013"
+  ],
+  "author": "Alain Muller",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "472e7e31a5bad7733707f48899a3cbd0c0f2817d"
+}
