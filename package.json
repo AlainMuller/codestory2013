@@ -20,5 +20,10 @@
   "author": "Alain Muller",
   "license": "BSD",
   "readmeFilename": "README.md",
-  "gitHead": "472e7e31a5bad7733707f48899a3cbd0c0f2817d"
+  "gitHead": "472e7e31a5bad7733707f48899a3cbd0c0f2817d",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "",
+    "should": ""
+  }
 }
