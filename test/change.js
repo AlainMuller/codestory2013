@@ -40,9 +40,7 @@ describe('change', function() {
     	it('6 retourne [{"foo":6}]', function(){
     		change.makeChange(6).should.eql([{"foo":6}]);
     	});
-    	it('7 retourne [{"foo":7}, {"bar":1}]', function(){
-    		change.makeChange(7).should.eql([{"foo":7, "bar":1}]);
-    	});
+    	it('7 retourne [{"foo":7}, {"bar":1}]');
     	it('8 retourne [{"foo":8}, {"foo":1, "bar":1}]');
     	it('9 retourne [{"foo":2, "bar":1}]');
     });
