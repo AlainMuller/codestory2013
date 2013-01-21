@@ -1,0 +1,8 @@
+{
+    "/?q=Quelle+est+ton+adresse+email"                                                  : "alain.muller@gmail.com",
+    "/?q=Es+tu+heureux+de+participer(OUI/NON)"                                          : "OUI",
+    "/?q=Es+tu+abonne+a+la+mailing+list(OUI/NON)"                                       : "OUI",
+    "/?q=Es+tu+pret+a+recevoir+une+enonce+au+format+markdown+par+http+post(OUI/NON)"    : "OUI",
+    "/?q=Est+ce+que+tu+reponds+toujours+oui(OUI/NON)"                                   : "NON",
+    "/?q=As+tu+bien+recu+le+premier+enonce(OUI/NON)"                                    : "NON"
+}
