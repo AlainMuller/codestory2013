@@ -22,8 +22,9 @@ var queries = require(__dirname + "/res/queries.json");
 // Définition du port d'écoute du serveur
 var port = process.env.PORT || 1337;
 
-// Message par défaut si chemin incompris
-var NOT_FOUND = "Accès Refusé!";
+// Messages d'erreur
+var NOT_FOUND = "Accès Refusé!",
+    MAUVAIS_CALCUL = "Expression invalide";
 
 // Little bit of eye candy! ;)
 var favicon;
@@ -79,6 +80,7 @@ var server = http.createServer(function (request, response) {
                 });
             }
         }
+
         else {
 
             // Analyse de l'URL
@@ -110,6 +112,39 @@ var server = http.createServer(function (request, response) {
 
                 response.writeHead(200, {"Content-Type":"text/plain;charset=utf-8"});
                 response.end(JSON.stringify(change.makeChange(params[3] ? params[3] : 0)));
+            }
+
+            //
+            // Cas d'un calcul bidon (ex : /?q=1+1)
+            //
+
+            else if (urlparts.query.split("=")[0] == "q") {
+                var expression = urlparts.query.split("=")[1];
+                // On va tester si l'expression est bien un calcul
+                var reg = /(?:[a-z$_][a-z0-9$_]*)|(?:[;={}\[\]"'!&<>^\\?:])/ig;
+                var valid = true;
+
+                // Détection de fonction de calcul javascipt valides
+                var expr = expression.replace(reg, function ($0) {
+                    // If the name is a direct member of Math, allow
+                    if (Math.hasOwnProperty($0))
+                        return "Math." + $0;
+                    // Otherwise the expression is invalid
+                    else
+                        valid = false;
+                });
+
+                if (!valid) {
+                    // Ecriture de l'En-tête HTTP (404 : Status NOT FOUND)
+                    response.writeHead(404, {"Content-Type":"text/plain;charset=utf-8"});
+                    response.end(MAUVAIS_CALCUL);
+                }
+                else {
+                    var answer = 0 + eval(expr);
+                    util.log(" > Réponse : " + expression + " = " + answer);
+                    response.writeHead(200, {"Content-Type":"text/plain;charset=utf-8"});
+                    response.end("" + answer);
+                }
             }
 
             else if (false) {
