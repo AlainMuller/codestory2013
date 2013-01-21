@@ -3,3 +3,7 @@ npm-debug.log
 
 # WebStorm Projet Files
 .idea/
+
+# Log files
+app/res/access.log
+app/res/postData.log
