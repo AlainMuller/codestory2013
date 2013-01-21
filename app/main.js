@@ -118,7 +118,7 @@ var server = http.createServer(function (request, response) {
             // Cas d'un calcul bidon (ex : /?q=1+1)
             //
 
-            else if (urlparts.query.split("=")[0] == "q") {
+            else if (urlparts.query && urlparts.query.split("=")[0] == "q") {
                 var expression = urlparts.query.split("=")[1];
                 // On va tester si l'expression est bien un calcul
                 var reg = /(?:[a-z$_][a-z0-9$_]*)|(?:[;={}\[\]"'!&<>^\\?:])/ig;
