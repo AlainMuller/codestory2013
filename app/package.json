@@ -2,7 +2,7 @@
   "name": "codestory2013",
   "version": "0.0.1",
   "description": "Le serveur (node.js) représentant ma participation au concours CodeStory 2013",
-  "main": "lib/main.js",
+  "main": "main.js",
   "directories": {
     "test": "test"
   },
