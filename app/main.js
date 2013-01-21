@@ -87,10 +87,24 @@ var server = http.createServer(function (request, response) {
             response.end(JSON.stringify(change.makeChange(params[3] ? params[3] : 0)));
         }
 
-        else if (false) {
-            // TODO : prendre en compte les autres types de questions et refactorer le routage une fois fini
+        //
+        // Cas d'un calcul bidon (ex : /?q=1+1)
+        //
+
+        else if (urlparts.query.split("=")[0] == "q") {
+            // TODO : pas très safe cet eval... Ptite regexp pour filtrer peut être?
+            var expression = urlparts.query.split("=")[1];
+            var answer = 0 + eval(expression);
+            util.log(" > Réponse : " + expression + " = " + answer);
+            response.writeHead(200, {"Content-Type":"text/plain;charset=utf-8"});
+            response.end("" + answer);
         }
 
+        else if (false)
+        {
+            // TODO : prendre en compte les autres types de questions et refactorer le routage une fois fini
+        }
+        
         //
         // Requêtes perso : afficher un énoncé, lister les accès, les données POST, les questions.
         //
