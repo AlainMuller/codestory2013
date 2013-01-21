@@ -1,3 +1,11 @@
+/**
+ * Created with JetBrains WebStorm.
+ * User: Alain Muller
+ * Date: 21/01/13
+ * Time: 11:41
+ * Module de test du module change
+ */
+
 var should = require('should');
 var change = require(__dirname + '/../lib/change');
 
