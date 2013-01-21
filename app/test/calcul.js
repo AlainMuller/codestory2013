@@ -101,7 +101,11 @@ describe('calcul', function () {
         it('1,5*4+1,5*2 = 9', function () {
             calc.calcExpr("1,5*4+1,5*2").should.eql("9");
         });
+    });
 
-
+    describe('#expression invalice', function () {
+        it('pouet = undefined', function () {
+            should.not.exist(calc.calcExpr("pouet"));
+        });
     });
 });

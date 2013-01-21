@@ -122,10 +122,9 @@ var server = http.createServer(function (request, response) {
                     else if (urlparts.query && urlparts.query.split("=")[0] == "q") {
                         var expression = urlparts.query.split("=")[1];
                         // Détermination du résultat si l'expression est bien une opération mathématique valide
-                        var answer = calc.calcExpr(expression);
+                        var message = calc.calcExpr(expression);
 
-                        if (answer != undefined) {
-                            var message = ("" + answer).replace('.', ',');
+                        if (message != undefined) {
                             util.log(" > Réponse : " + expression + " = " + message);
                             response.writeHead(200, {"Content-Type":"text/plain;charset=utf-8"});
                             response.end(message);
