@@ -8,10 +8,11 @@
 
 var fs = require('fs');
 
-// Définition des chemins des fichiers de log
+// Définition des chemins des fichiers
 var accessLog = __dirname + "/../res/access.log";
 var postData = __dirname + "/../res/postData.log";
 var queries = __dirname + "/../res/queries.json";
+var favicon = __dirname + "/../res/favicon.ico";
 
 // Fonction permettant d'avoir des logs datés
 function log(message) {
@@ -67,3 +68,4 @@ exports.logData = logPostDataToFile;
 exports.logFile = accessLog;
 exports.dataFile = postData;
 exports.queries = queries;
+exports.favicon = favicon;
