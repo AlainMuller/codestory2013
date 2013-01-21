@@ -103,9 +103,16 @@ describe('calcul', function () {
         });
     });
 
-    describe('#expression invalice', function () {
+    describe('#expression invalide', function () {
         it('pouet = undefined', function () {
             should.not.exist(calc.calcExpr("pouet"));
         });
     });
+
+    describe('#Grosse Opération', function () {
+        it('3,18780189038289e+49 => 31878018903828899277492024491376690701584023926880', function () {
+            calc.calcExpr("((1,1+2)+3,14+4+(5+6+7)+(8+9+10)*4267387833344334647677634)/2*553344300034334349999000").should.eql("31878018903828899277492024491376690701584023926880");
+        });
+    });
+
 });

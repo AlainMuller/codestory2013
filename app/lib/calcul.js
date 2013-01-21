@@ -6,6 +6,9 @@
  * Module de calcul d'une expression arithmétique
  */
 
+
+var calc = require(__dirname + "/../lib/bignumcalc");
+
 // Regexp pour tester si l'expression est bien un calcul mathématique
 var REGEXP_MATHEMATIQUE = /(?:[a-z$_][a-z0-9$_]*)|(?:[;={}\[\]"'!&<>^\\?:])/ig;
 
@@ -27,22 +30,10 @@ function calculMathematique(expression) {
     });
 
     if (valid) {
-        result = 0 + eval(expr);
+        result = calc.compute(expression);
     }
 
     return result;
 }
 
-// Englobage du calcul dans une fonction de transcodage des chiffres à virgule (format FR attendu)
-function calculExpression(expression) {
-    var result;
-    if (expression) {
-        var resNumber = calculMathematique(expression.replace(/,/g, '.'));
-        if (resNumber != undefined) {
-            result = ("" + resNumber).replace(/\./g, ',');
-        }
-    }
-    return result;
-}
-
-exports.calcExpr = calculExpression;
+exports.calcExpr = calculMathematique;

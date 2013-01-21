@@ -61,9 +61,15 @@ function logPostDataToFile(request, data) {
     stream.end();
 }
 
+// Fonction utilitaire permettant de déterminer si une variable n'est ni indéfinie ni vide
+function notEmpty(val) {
+    return val && val != '';
+}
+
 exports.log = log;
 exports.logReq = logRequestToFile;
 exports.logData = logPostDataToFile;
+exports.notEmpty = notEmpty;
 
 exports.logFile = accessLog;
 exports.dataFile = postData;

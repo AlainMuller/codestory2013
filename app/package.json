@@ -1,6 +1,6 @@
 {
   "name": "codestory2013",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Le serveur (node.js) représentant ma participation au concours CodeStory 2013",
   "main": "main.js",
   "directories": {
@@ -24,7 +24,8 @@
   "dependencies": {},
   "devDependencies": {
     "mocha": "",
-    "should": ""
+    "should": "",
+    "bigdecimal":""
   },
   "bin": {
     "change": "bin/change"
