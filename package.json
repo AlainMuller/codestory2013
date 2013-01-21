@@ -2,12 +2,12 @@
   "name": "codestory2013",
   "version": "0.1.0",
   "description": "Le serveur (node.js) représentant ma participation au concours CodeStory 2013",
-  "main": "main.js",
+  "main": "app/main.js",
   "directories": {
-    "test": "test"
+    "test": "app/test"
   },
   "scripts": {
-    "test": "mocha -R list test/*.js"
+    "test": "mocha -R list app/test/*.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,6 @@
     "should": ""
   },
   "bin": {
-    "change": "./bin/change"
+    "change": "app/bin/change"
   }
 }
