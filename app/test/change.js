@@ -1,5 +1,5 @@
 var should = require('should');
-var change = require(__dirname + '/../app/lib/change');
+var change = require(__dirname + '/../lib/change');
 
 describe('change', function() {
     describe('#paramètres', function() {
