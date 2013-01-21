@@ -5,5 +5,6 @@
     "/?q=Es+tu+pret+a+recevoir+une+enonce+au+format+markdown+par+http+post(OUI/NON)"    : "OUI",
     "/?q=Est+ce+que+tu+reponds+toujours+oui(OUI/NON)"                                   : "NON",
     "/?q=As+tu+bien+recu+le+premier+enonce(OUI/NON)"                                    : "NON",
-		"/?q=1+1"																																						: "2"
+		"/?q=1+1"																																						: "2",
+		"/?q=2+2"																																						: "4"
 }
