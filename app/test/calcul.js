@@ -98,6 +98,9 @@ describe('calcul', function () {
         it('1,5*4 = 6', function () {
             calc.calcExpr("1,5*4").should.eql("6");
         });
+        it('1,5*4+1,5*2 = 9', function () {
+            calc.calcExpr("1,5*4+1,5*2").should.eql("9");
+        });
 
 
     });

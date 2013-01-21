@@ -37,9 +37,9 @@ function calculMathematique(expression) {
 function calculExpression(expression) {
     var result;
     if (expression) {
-        var resNumber = calculMathematique(expression.replace(',', '.'));
+        var resNumber = calculMathematique(expression.replace(/,/g, '.'));
         if (resNumber != undefined) {
-            result = ("" + resNumber).replace('.', ',');
+            result = ("" + resNumber).replace(/\./g, ',');
         }
     }
     return result;
