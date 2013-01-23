@@ -45,13 +45,11 @@ var server = http.createServer(function (request, response) {
 
             // Requête POST
             if (request.method == 'POST') {
-                var postRequest;
                 var body = '';
                 request.on('data', function (data) {
                     body += data;
                 });
                 request.on('end', function () {
-                    postRequest = JSON.parse(body);
                     util.log("Requête POST : " + body);
                     // Sauvegarde des données de la requête POST dans un fichier de log
                     util.logData(request, body);
@@ -65,7 +63,7 @@ var server = http.createServer(function (request, response) {
                     if ((params[1] == "jajascript") && (params[2] == "optimize")) {
                         util.log("Calcul du meilleur planning pour les vols : " + body);
 
-                        var bestPlanning = planning.optimize(postRequest);
+                        var bestPlanning = planning.optimize(JSON.parse(body));
 
                         if (bestPlanning != undefined) {
                             util.log(" > Réponse : " + JSON.stringify(bestPlanning));
