@@ -8,7 +8,6 @@
 
 // Chargement des modules généraux
 var http = require("http");
-var qs = require("querystring");
 var fs = require("fs");
 var url = require("url");
 // Chargement des modules internes
@@ -16,6 +15,7 @@ var change = require(__dirname + "/lib/change");
 var util = require(__dirname + "/lib/util");
 var routes = require(__dirname + "/lib/routes.js");
 var calc = require(__dirname + "/lib/calcul.js");
+var planning = require(__dirname + "/lib/planning");
 
 // Chargement de l'objet JSON (association requête(URL) / réponse au format JSON)
 var queries = require(__dirname + "/res/queries.json");
@@ -25,7 +25,8 @@ var port = process.env.PORT || 1337;
 
 // Messages d'erreur
 var NOT_FOUND = "Accès Refusé!",
-    MAUVAIS_CALCUL = "Expression invalide";
+    MAUVAIS_CALCUL = "Expression invalide",
+    MAUVAIS_FORMAT = "Mauvais format";
 
 // Little bit of eye candy! ;)
 var favicon;
@@ -37,6 +38,11 @@ var server = http.createServer(function (request, response) {
             // On trace la requête dans un fichier de log
             util.logReq(request);
 
+            // Analyse de l'URL
+            var urlparts = url.parse(request.url);
+            // Décodage du chemin de l'URL
+            var params = urlparts.path.split("/");
+
             // Requête POST
             if (request.method == 'POST') {
                 var postRequest;
@@ -45,18 +51,39 @@ var server = http.createServer(function (request, response) {
                     body += data;
                 });
                 request.on('end', function () {
-                    postRequest = qs.parse(body);
-                    util.log("Requête POST : " + postRequest);
-                    util.log(" >> Data  : " + JSON.stringify(postRequest));
+                    postRequest = JSON.parse(body);
+                    util.log("Requête POST : " + body);
                     // Sauvegarde des données de la requête POST dans un fichier de log
-                    util.logData(request, JSON.stringify(postRequest));
+                    util.logData(request, body);
 
                     // TODO : stocker les données de l'énoncé au format MarkDown (le cas échéant) dans le fichier correspondant /res/enonceX.md
-                });
 
-                // Ecriture de l'En-tête HTTP (201 : Status CREATED)
-                response.writeHead(201, {"Content-Type":"text/plain;charset=utf-8"});
-                response.end("Data saved! ;)");
+                    //
+                    // Cas de l'énoncé 2 : jajascript (ex: /jajascript/optimize avec param `{"[ {VOL:"AF514", DEPART:0, DUREE:5, PRIX: 10} ]}`)
+                    //
+
+                    if ((params[1] == "jajascript") && (params[2] == "optimize")) {
+                        util.log("Calcul du meilleur planning pour les vols : " + body);
+
+                        var bestPlanning = planning.optimize(postRequest);
+
+                        if (bestPlanning != undefined) {
+                            util.log(" > Réponse : " + JSON.stringify(bestPlanning));
+                            response.writeHead(201, {"Content-Type":"text/plain;charset=utf-8"});
+                            response.end(JSON.stringify(bestPlanning));
+                        }
+                        else {
+                            // Ecriture de l'En-tête HTTP (404 : Status NOT FOUND)
+                            response.writeHead(404, {"Content-Type":"text/plain;charset=utf-8"});
+                            response.end(MAUVAIS_FORMAT);
+                        }
+                    }
+                    else {
+                        // Ecriture de l'En-tête HTTP (201 : Status CREATED)
+                        response.writeHead(201, {"Content-Type":"text/plain;charset=utf-8"});
+                        response.end("Data saved! ;)");
+                    }
+                });
             }
             // Requête GET
             else if (request.method == 'GET') {
@@ -83,11 +110,6 @@ var server = http.createServer(function (request, response) {
                 }
 
                 else {
-
-                    // Analyse de l'URL
-                    var urlparts = url.parse(request.url);
-                    // Décodage du chemin de l'URL
-                    var params = urlparts.path.split("/");
 
                     //
                     // Cas des questions simples (ex : /?q=Est+ce+que+tu+reponds+toujours+oui(OUI/NON))
