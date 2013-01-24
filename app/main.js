@@ -65,7 +65,10 @@ var server = http.createServer(function (request, response) {
                     if ((params[1] == "jajascript") && (params[2] == "optimize")) {
                         util.log("Calcul du meilleur planning pour les vols : " + body);
 
+                        var start = Date.now();
                         var bestPlanning = planning.optimize(postRequest);
+                        var tps = Date.now() - start;
+                        util.log(" > Temps de traitement : " + tps + "ms");
 
                         if (bestPlanning != undefined) {
                             util.log(" > Réponse : " + JSON.stringify(bestPlanning));
