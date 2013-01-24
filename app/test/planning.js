@@ -22,6 +22,46 @@ var postData2 = [
     {"VOL":"AF3", "DEPART":2, "DUREE":1, "PRIX":6}
 ];
 
+var yvesData = [
+    { "VOL":"aggressive-scallop-39", "DEPART":3, "DUREE":10, "PRIX":25 },
+    { "VOL":"glamorous-armada-16", "DEPART":2, "DUREE":4, "PRIX":10 },
+    { "VOL":"inexpensive-vein-64", "DEPART":0, "DUREE":3, "PRIX":1 },
+    { "VOL":"fragile-mule-42", "DEPART":2, "DUREE":10, "PRIX":6 },
+    { "VOL":"scary-stapler-21", "DEPART":4, "DUREE":12, "PRIX":5 },
+    { "VOL":"depressed-playpen-68", "DEPART":7, "DUREE":4, "PRIX":1 },
+    { "VOL":"busy-mailman-46", "DEPART":7, "DUREE":6, "PRIX":23 },
+    { "VOL":"terrible-optometry-24", "DEPART":7, "DUREE":8, "PRIX":3 },
+    { "VOL":"great-tailwind-12", "DEPART":6, "DUREE":10, "PRIX":8 },
+    { "VOL":"pleasant-percolator-62", "DEPART":8, "DUREE":3, "PRIX":1 },
+    { "VOL":"nice-flea-3", "DEPART":13, "DUREE":6, "PRIX":4 },
+    { "VOL":"jolly-photocopier-16", "DEPART":11, "DUREE":6, "PRIX":22 },
+    { "VOL":"filthy-snooper-15", "DEPART":12, "DUREE":9, "PRIX":7 },
+    { "VOL":"nice-beehive-86", "DEPART":11, "DUREE":9, "PRIX":15 },
+    { "VOL":"elated-mermaid-11", "DEPART":10, "DUREE":16, "PRIX":7 }
+];
+
+var bigPostData = [
+    { "VOL":"flat-vegetarian-72", "DEPART":0, "DUREE":6, "PRIX":29 },
+    { "VOL":"upset-leprechaun-36", "DEPART":1, "DUREE":10, "PRIX":6 },
+    { "VOL":"helpless-slang-30", "DEPART":1, "DUREE":2, "PRIX":7 },
+    { "VOL":"gleaming-optometry-69", "DEPART":4, "DUREE":1, "PRIX":15 },
+    { "VOL":"calm-twill-61", "DEPART":2, "DUREE":10, "PRIX":7 },
+    { "VOL":"exuberant-tin-51", "DEPART":7, "DUREE":2, "PRIX":28 },
+    { "VOL":"creepy-guerilla-40", "DEPART":8, "DUREE":10, "PRIX":18 },
+    { "VOL":"unsightly-condor-59", "DEPART":8, "DUREE":10, "PRIX":6 },
+    { "VOL":"fragile-bandana-18", "DEPART":9, "DUREE":4, "PRIX":10 },
+    { "VOL":"large-alcohol-28", "DEPART":8, "DUREE":18, "PRIX":5 },
+    { "VOL":"big-shoestring-24", "DEPART":13, "DUREE":3, "PRIX":18 },
+    { "VOL":"super-vat-4", "DEPART":12, "DUREE":6, "PRIX":13 },
+    { "VOL":"deafening-soccer-68", "DEPART":11, "DUREE":2, "PRIX":8 },
+    { "VOL":"foolish-pedestrian-60", "DEPART":10, "DUREE":7, "PRIX":15 },
+    { "VOL":"stormy-helicopter-48", "DEPART":11, "DUREE":19, "PRIX":4 },
+    { "VOL":"cloudy-tigress-54", "DEPART":19, "DUREE":4, "PRIX":25 },
+    { "VOL":"blue-eyed-movement-71", "DEPART":18, "DUREE":1, "PRIX":7 },
+    { "VOL":"adventurous-nursery-21", "DEPART":17, "DUREE":3, "PRIX":8 },
+    { "VOL":"precious-recipe-48", "DEPART":16, "DUREE":2, "PRIX":12 },
+    { "VOL":"cute-prince-8", "DEPART":15, "DUREE":20, "PRIX":1 }
+];
 
 describe('jajascript', function () {
     describe('#optimize', function () {
@@ -63,6 +103,19 @@ describe('jajascript', function () {
             res.gain.should.eql(12);
             res.path.should.eql(["AF1", "AF3", "AF2"]);
             res.path.should.not.eql(["AF1", "AF2", "AF3"]);
+        });
+
+        it('should handle 15 flights', function () {
+            var res = planning.optimize(yvesData);
+            res.gain.should.eql(37);
+            res.path.should.eql(['glamorous-armada-16', 'busy-mailman-46', 'nice-flea-3']);
+        });
+
+        it('should handle 20 flights', function () {
+            var res = planning.optimize(bigPostData);
+            should.exist(res);
+            res.gain.should.eql(129);
+            res.path.should.eql(['flat-vegetarian-72', 'exuberant-tin-51', 'fragile-bandana-18', 'big-shoestring-24', 'precious-recipe-48', 'blue-eyed-movement-71', 'cloudy-tigress-54']);
         });
     });
 });
