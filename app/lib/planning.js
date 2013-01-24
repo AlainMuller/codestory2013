@@ -21,6 +21,8 @@ var compareFlights = function (flight1, flight2) {
     return flight1.depart - flight2.depart;
 };
 
+// TODO : Refactoring sur ce code à prévoir : trop lourd!!!!
+// TODO : Mauvaise récursion, cf. http://utahjs.com/2010/09/16/nodejs-events-and-recursion-readdir/
 // Fonction retournant toutes les combinaisons possibles des vols du tableau passé en paramètre
 var combinaisons = function (array) {
     var fn = function (n, src, got, all) {
@@ -96,7 +98,7 @@ var optimize = function (inputArray) {
     // Liste des vols (transcodage)
     var vols = [];
 
-    // TODO : transcodage et tri pas forcément nécessaire, voire pour virer ça pour améliorer les perfs
+    var start = Date.now();
 
     // Transcodage des vols
     for (var i = 0; i < inputArray.length; i++) {
@@ -106,13 +108,22 @@ var optimize = function (inputArray) {
         vols.push(currentFlight);
     }
 
+    console.log("> transcode : " + eval(Date.now() - start) + "ms");
+
     // Tri de la liste des vols
     vols.sort(compareFlights);
 
+    console.log("> sort : " + eval(Date.now() - start) + "ms");
+
     // 1 - Calculer l'ensemble des combinaisons possibles
     var allCombis = combinaisons(vols);
+
+    console.log("> allCombis : " + eval(Date.now() - start) + "ms");
     // 2 - Retirer les combinaisons invalides
     var validCombis = allCombis.filter(filterGoodOnes);
+
+    console.log("> filter : " + eval(Date.now() - start) + "ms");
+
     // 3 - Retourner de toutes les combinaisons valides la plus rentable
     return getBestGain(validCombis);
 };
