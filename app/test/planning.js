@@ -63,6 +63,34 @@ var bigPostData = [
     { "VOL":"cute-prince-8", "DEPART":15, "DUREE":20, "PRIX":1 }
 ];
 
+var veryBigPostData = [
+    { "VOL":"poor-gypsy-37", "DEPART":4, "DUREE":7, "PRIX":21 },
+    { "VOL":"muddy-grapevine-46", "DEPART":0, "DUREE":1, "PRIX":17 },
+    { "VOL":"wide-eyed-chalk-79", "DEPART":2, "DUREE":6, "PRIX":3 },
+    { "VOL":"disgusted-blackhead-11", "DEPART":1, "DUREE":7, "PRIX":12 },
+    { "VOL":"annoying-maggot-50", "DEPART":1, "DUREE":6, "PRIX":6 },
+    { "VOL":"soft-cactus-70", "DEPART":8, "DUREE":4, "PRIX":20 },
+    { "VOL":"skinny-llama-2", "DEPART":6, "DUREE":9, "PRIX":7 },
+    { "VOL":"victorious-traveller-53", "DEPART":7, "DUREE":5, "PRIX":6 },
+    { "VOL":"rapid-buttermilk-85", "DEPART":6, "DUREE":4, "PRIX":7 },
+    { "VOL":"nice-swatch-26", "DEPART":9, "DUREE":12, "PRIX":7 },
+    { "VOL":"helpful-ammonia-48", "DEPART":13, "DUREE":4, "PRIX":22 },
+    { "VOL":"crazy-pea-90", "DEPART":11, "DUREE":5, "PRIX":13 },
+    { "VOL":"courageous-ration-13", "DEPART":11, "DUREE":10, "PRIX":3 },
+    { "VOL":"moaning-tiling-89", "DEPART":10, "DUREE":1, "PRIX":8 },
+    { "VOL":"squealing-scapula-77", "DEPART":12, "DUREE":10, "PRIX":3 },
+    { "VOL":"mammoth-source-2", "DEPART":15, "DUREE":9, "PRIX":20 },
+    { "VOL":"wide-schoolboy-4", "DEPART":16, "DUREE":6, "PRIX":15 },
+    { "VOL":"whispering-pancake-27", "DEPART":15, "DUREE":10, "PRIX":7 },
+    { "VOL":"grotesque-treasurer-60", "DEPART":19, "DUREE":9, "PRIX":7 },
+    { "VOL":"frightened-utensil-39", "DEPART":17, "DUREE":2, "PRIX":4 },
+    { "VOL":"short-pensioner-32", "DEPART":20, "DUREE":4, "PRIX":27 },
+    { "VOL":"broad-water-41", "DEPART":22, "DUREE":1, "PRIX":8 },
+    { "VOL":"tame-pollywog-24", "DEPART":20, "DUREE":5, "PRIX":5 },
+    { "VOL":"skinny-colon-33", "DEPART":20, "DUREE":8, "PRIX":9 },
+    { "VOL":"teeny-mouser-99", "DEPART":23, "DUREE":3, "PRIX":4 }
+];
+
 describe('jajascript', function () {
     describe('#optimize', function () {
         it('should return gain and path', function () {
@@ -117,5 +145,7 @@ describe('jajascript', function () {
             res.gain.should.eql(129);
             res.path.should.eql(['flat-vegetarian-72', 'exuberant-tin-51', 'fragile-bandana-18', 'big-shoestring-24', 'precious-recipe-48', 'blue-eyed-movement-71', 'cloudy-tigress-54']);
         });
+
+        it('should handle more than 20 flights');
     });
 });

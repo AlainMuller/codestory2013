@@ -12,6 +12,7 @@
  *  3 - Retourner de toutes les combinaisons valides la plus rentable.
  */
 
+var util = require(__dirname + '/../lib/util');
 var flight = require(__dirname + '/../lib/flight');
 
 // Fonction de comparaison personnalisée permettant de trier les vols par date de départ et prix en cas d'égalité
@@ -21,8 +22,8 @@ var compareFlights = function (flight1, flight2) {
     return flight1.depart - flight2.depart;
 };
 
-// TODO : Refactoring sur ce code à prévoir : trop lourd!!!!
-// TODO : Mauvaise récursion, cf. http://utahjs.com/2010/09/16/nodejs-events-and-recursion-readdir/
+// TODO : Refactoring sur ce code à prévoir : trop lourd en mémoire!!!!! (Mauvaise récursion, cf. http://utahjs.com/2010/09/16/nodejs-events-and-recursion-readdir/)
+// TODO : Créer le planning à la volée si la combinaison est valide
 // Fonction retournant toutes les combinaisons possibles des vols du tableau passé en paramètre
 var combinaisons = function (array) {
     var fn = function (n, src, got, all) {
@@ -32,14 +33,12 @@ var combinaisons = function (array) {
             }
             return;
         }
-        current = src[n];
         for (var j = 0; j < src.length; j++) {
             fn(n - 1, src.slice(j + 1), got.concat(src[j]), all);
         }
         return;
     };
     var all = [];
-    var current = {};
     for (var i = 0; i < array.length; i++) {
         fn(i, array, [], all);
     }
@@ -98,6 +97,13 @@ var optimize = function (inputArray) {
     // Liste des vols (transcodage)
     var vols = [];
 
+    //TODO : virer ce blocage quand l'algo sera optimisé
+    if (inputArray.length > 20)
+    {
+        util.log("Demande trop importante pour l'algo actuel : " + inputArray.length + " vols");
+        return [];
+    }
+
     var start = Date.now();
 
     // Transcodage des vols
@@ -108,21 +114,21 @@ var optimize = function (inputArray) {
         vols.push(currentFlight);
     }
 
-    console.log("> transcode : " + eval(Date.now() - start) + "ms");
+    util.log("> transcode : " + eval(Date.now() - start) + "ms");
 
     // Tri de la liste des vols
     vols.sort(compareFlights);
 
-    console.log("> sort : " + eval(Date.now() - start) + "ms");
+    util.log("> sort : " + eval(Date.now() - start) + "ms");
 
     // 1 - Calculer l'ensemble des combinaisons possibles
     var allCombis = combinaisons(vols);
 
-    console.log("> allCombis : " + eval(Date.now() - start) + "ms");
+    util.log("> allCombis : " + eval(Date.now() - start) + "ms");
     // 2 - Retirer les combinaisons invalides
     var validCombis = allCombis.filter(filterGoodOnes);
 
-    console.log("> filter : " + eval(Date.now() - start) + "ms");
+    util.log("> filter : " + eval(Date.now() - start) + "ms");
 
     // 3 - Retourner de toutes les combinaisons valides la plus rentable
     return getBestGain(validCombis);
