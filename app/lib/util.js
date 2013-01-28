@@ -34,7 +34,6 @@ function logRequestToFile(request) {
     });
 
     stream.write(dateAndTime + " | ", 'utf8');
-    stream.write(request.connection.remoteAddress + " | ", 'utf8');
     stream.write(request.method + " | ", 'utf8');
     stream.write(request.url + "\n", 'utf8');
     stream.end();
@@ -54,7 +53,6 @@ function logPostDataToFile(request, data) {
     });
 
     stream.write(dateAndTime + " | ", 'utf8');
-    stream.write(request.connection.remoteAddress + " | ", 'utf8');
     stream.write(request.method + " | ", 'utf8');
     stream.write(request.url + "\n", 'utf8');
     stream.write("\t" + data + "\n", 'utf8');
