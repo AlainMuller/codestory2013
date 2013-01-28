@@ -14,7 +14,7 @@ var url = require("url");
 var change = require(__dirname + "/lib/change");
 var util = require(__dirname + "/lib/util");
 var routes = require(__dirname + "/lib/routes.js");
-var calc = require(__dirname + "/lib/calcul.js");
+var infix = require(__dirname + "/lib/infix.js");
 var planning = require(__dirname + "/lib/planning");
 
 // Chargement de l'objet JSON (association requête(URL) / réponse au format JSON)
@@ -147,7 +147,7 @@ var server = http.createServer(function (request, response) {
                     else if (urlparts.query && urlparts.query.split("=")[0] == "q") {
                         var expression = urlparts.query.split("=")[1];
                         // Détermination du résultat si l'expression est bien une opération mathématique valide
-                        var message = calc.calcExpr(expression);
+                        var message = infix.calcul(expression);
 
                         if (message != undefined) {
                             util.log(" > Réponse : " + expression + " = " + message);
