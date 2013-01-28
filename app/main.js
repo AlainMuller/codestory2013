@@ -15,7 +15,7 @@ var change = require(__dirname + "/lib/change");
 var util = require(__dirname + "/lib/util");
 var routes = require(__dirname + "/lib/routes.js");
 var infix = require(__dirname + "/lib/infix.js");
-var planning = require(__dirname + "/lib/planning");
+var jajascript = require(__dirname + "/lib/jajascript");
 
 // Chargement de l'objet JSON (association requête(URL) / réponse au format JSON)
 var queries = require(__dirname + "/res/queries.json");
@@ -57,8 +57,6 @@ var server = http.createServer(function (request, response) {
                     // Sauvegarde des données de la requête POST dans un fichier de log
                     util.logData(request, body);
 
-                    // TODO : stocker les données de l'énoncé au format MarkDown (le cas échéant) dans le fichier correspondant /res/enonceX.md
-
                     //
                     // Cas de l'énoncé 2 : jajascript (ex: /jajascript/optimize avec param `{"[ {VOL:"AF514", DEPART:0, DUREE:5, PRIX: 10} ]}`)
                     //
@@ -66,7 +64,7 @@ var server = http.createServer(function (request, response) {
                     if ((params[1] == "jajascript") && (params[2] == "optimize")) {
                         util.log("Calcul du meilleur planning pour les vols : " + body);
 
-                        var bestPlanning = planning.optimize(postRequest);
+                        var bestPlanning = jajascript.optimize(postRequest);
                         var tps = Date.now() - start;
                         util.log(" > Temps de traitement : " + tps + "ms");
 
