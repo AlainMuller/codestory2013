@@ -43,6 +43,7 @@ var server = http.createServer(function (request, response) {
             // Décodage du chemin de l'URL
             var params = urlparts.path.split("/");
 
+            var start = Date.now();
             // Requête POST
             if (request.method == 'POST') {
                 var postRequest;
@@ -65,7 +66,6 @@ var server = http.createServer(function (request, response) {
                     if ((params[1] == "jajascript") && (params[2] == "optimize")) {
                         util.log("Calcul du meilleur planning pour les vols : " + body);
 
-                        var start = Date.now();
                         var bestPlanning = planning.optimize(postRequest);
                         var tps = Date.now() - start;
                         util.log(" > Temps de traitement : " + tps + "ms");
@@ -124,6 +124,10 @@ var server = http.createServer(function (request, response) {
                     // On a répondu à une question simple
                     if (message != undefined) {
                         util.log(" > Réponse : " + message);
+
+                        var tps = Date.now() - start;
+                        util.log(" > Temps de traitement : " + tps + "ms");
+
                         // Ecriture de l'En-tête HTTP (200 : Status OK)
                         response.writeHead(200, {"Content-Type":"text/plain;charset=utf-8"});
                         response.end(message);
@@ -136,8 +140,13 @@ var server = http.createServer(function (request, response) {
                     else if ((params[1] == "scalaskel") && (params[2] == "change")) {
                         util.log("Calcul du change pour la valeur : " + params[3]);
 
+                        var message = change.makeChange(params[3] ? params[3] : 0);
+
+                        var tps = Date.now() - start;
+                        util.log(" > Temps de traitement : " + tps + "ms");
+
                         response.writeHead(200, {"Content-Type":"text/plain;charset=utf-8"});
-                        response.end(JSON.stringify(change.makeChange(params[3] ? params[3] : 0)));
+                        response.end(JSON.stringify(message));
                     }
 
                     //
@@ -148,6 +157,9 @@ var server = http.createServer(function (request, response) {
                         var expression = urlparts.query.split("=")[1];
                         // Détermination du résultat si l'expression est bien une opération mathématique valide
                         var message = infix.calcul(expression);
+
+                        var tps = Date.now() - start;
+                        util.log(" > Temps de traitement : " + tps + "ms");
 
                         if (message != undefined) {
                             util.log(" > Réponse : " + expression + " = " + message);
