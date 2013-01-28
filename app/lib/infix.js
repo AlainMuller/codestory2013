@@ -25,9 +25,15 @@ var opStack = [];
 var calcul = function (expression) {
     var resultat;
 
+    // On vérifie si l'expression est valide
     if (!validRegexp.test(expression)) {
         console.log("Expression invalide : '" + expression + "'");
     }
+    // On vérifie si le nombre de parenthèses est cohérent
+    else if (expression.match(/\(/g).length != expression.match(/\)/g).length) {
+        console.log("Gestion incohérente des parenthèses : " + expression.match(/\(/g).length + " ouvrantes, " + expression.match(/\)/g).length + " fermantes");
+    }
+    // TODO : Mettre en place une meilleure regexp pour valider l'expression (gestion des opérateurs en début/fin de chaine, opérations binaires/unaires, ...)
     else {
         // Réinitialisation des variables
         valStack = [];
