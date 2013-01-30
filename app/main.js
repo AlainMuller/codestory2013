@@ -69,7 +69,7 @@ var server = http.createServer(function (request, response) {
                         util.log(" > Temps de traitement : " + tps + "ms");
 
                         if (bestPlanning != undefined) {
-                            util.log(" > Réponse : " + JSON.stringify(bestPlanning));
+                            util.log(" > Réponse : " + bestPlanning != undefined ? "gain = " +  bestPlanning.gain + " / vols = " + bestPlanning.path.length : "undefined");
                             response.writeHead(201, {"Content-Type":"text/plain;charset=utf-8"});
                             response.end(JSON.stringify(bestPlanning));
                         }
