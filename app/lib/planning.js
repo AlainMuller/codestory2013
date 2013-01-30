@@ -57,7 +57,6 @@ var optimize = function (inputArray) {
     var planningOptimalParHeure = {};
     /* 3 - Parcourir les vols par heure: */
     for (var heure in mapVolsParHeure) {
-        console.log(">> Heure : " + heure);
         // On identifie pour chaque heure, le vol optimal ainsi que le vol précédent
         var planningOptimalPourCetteHeure = {gain:0, path:[]};
 
@@ -65,24 +64,19 @@ var optimize = function (inputArray) {
 //        if (mapVolsParHeure.hasOwnProperty(heure)) {
         // Parcours de toutes les vols de chaque heure
         for (var indexVol in mapVolsParHeure[heure]) {
-            console.log("   > # Vol : " + indexVol);
             // On détermine l'heure minimale de départ par rapport à cette heure (cf. 1bis)
-            const vol = mapVolsParHeure[heure][indexVol];
+            var vol = mapVolsParHeure[heure][indexVol];
             var departMinimum = Math.max(0, vol.depart - volLePlusLong.duree);
 
+            console.log("   > # Vol : " + heure + " / " + indexVol + " -> "+JSON.stringify(vol));
             /* 4 - Pour chaque vol, trouver parmi les heures précédentes* le vol à conserver pour avoir le meilleur gain */
             for (var heurePrecedente = departMinimum; heurePrecedente <= vol.depart; heurePrecedente++) {
-
                 // On boucle sur tous les vols précédents possibles pour déterminer celui qui aura le meilleur gain cumulé
-                var meilleurPlanningHeurePrecedente;
-                if (planningOptimalParHeure[heurePrecedente] != undefined) {
-                    meilleurPlanningHeurePrecedente = planningOptimalParHeure[heurePrecedente];
-                } else {
-                    meilleurPlanningHeurePrecedente = {gain:0, path:[]};
-                }
+                var meilleurPlanningHeurePrecedente = planningOptimalParHeure[heurePrecedente] == undefined ? {gain:0, path:[]} : planningOptimalParHeure[heurePrecedente];
 
-                const gainCumule = meilleurPlanningHeurePrecedente.gain + vol.prix;
-                const pathCumule = meilleurPlanningHeurePrecedente.path.concat(vol);
+                var gainCumule = meilleurPlanningHeurePrecedente.gain + vol.prix;
+                var pathCumule = meilleurPlanningHeurePrecedente.path.concat(vol);
+
 
                 console.log("    > " + heure + " / " + vol.nom + " > gain cumulé : " + gainCumule + " -  Path : " + JSON.stringify(pathCumule));
 
@@ -104,7 +98,7 @@ var optimize = function (inputArray) {
     for (var heure in planningOptimalParHeure)
     {
         console.log(heure);
-        const optimalParHeure = planningOptimalParHeure[heure];
+        var optimalParHeure = planningOptimalParHeure[heure];
         console.log(optimalParHeure);
         if(optimalParHeure.gain > planningOptimal.gain) {
             planningOptimal = optimalParHeure;

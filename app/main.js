@@ -52,6 +52,11 @@ var server = http.createServer(function (request, response) {
                     body += data;
                 });
                 request.on('end', function () {
+                    if(body == "") {
+                        response.writeHead(201, {"Content-Type":"application/json;charset=utf-8"});
+                        response.end(JSON.stringify({gain: 0, path:[]}));
+                        return;
+                    }
                     postRequest = JSON.parse(body);
                     util.log("Requête POST : " + body);
                     // Sauvegarde des données de la requête POST dans un fichier de log
