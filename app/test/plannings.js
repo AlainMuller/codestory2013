@@ -24,6 +24,13 @@ var data2 = [
     {"VOL":"AF4", "DEPART":2, "DUREE":5, "PRIX":1}
 ];
 
+var dataOver = [
+    { "VOL":"glamorous-armada-16", "DEPART":2, "DUREE":4, "PRIX":10 },
+    { "VOL":"busy-mailman-46", "DEPART":7, "DUREE":6, "PRIX":23 },
+    { "VOL":"nice-flea-3", "DEPART":13, "DUREE":6, "PRIX":4 },
+    { "VOL":"nice-beehive-86", "DEPART":11, "DUREE":9, "PRIX":15 }
+];
+
 var data3 = [
     { "VOL":"aggressive-scallop-39", "DEPART":3, "DUREE":10, "PRIX":25 },
     { "VOL":"glamorous-armada-16", "DEPART":2, "DUREE":4, "PRIX":10 },
@@ -95,35 +102,36 @@ var data5 = [
 
 describe('planning', function () {
     // Génération d'un gros paquet de vols =)
-    var flights = [];
-    before(function () {
-        // Génération des vols
-        for (var i = 0; i < 50; i++) {
-            var f = {
-                "VOL":"flight-" + i,
-                "DEPART":Math.floor((Math.random() * 24) + 1),
-                "DUREE":Math.floor((Math.random() * 20) + 1),
-                "PRIX":Math.floor((Math.random() * 100) + 1)
-            };
-            flights.push(f);
-        }
-        console.log(flights.length + " vols générés! =)");
-    });
+//    var flights = [];
+//    before(function () {
+//        // Génération des vols
+//        for (var i = 0; i < 50; i++) {
+//            var f = {
+//                "VOL":"flight-" + i,
+//                "DEPART":Math.floor((Math.random() * 24) + 1),
+//                "DUREE":Math.floor((Math.random() * 20) + 1),
+//                "PRIX":Math.floor((Math.random() * 100) + 1)
+//            };
+//            flights.push(f);
+//        }
+//        console.log(flights.length + " vols générés! =)");
+//    });
 
     describe('#optimize', function () {
 
-        it('must sort flight by duration', function () {
-            var res = planning.optimize(data2);
-        });
-
-        it('should return gain and path'//, function () {
-//            var res = planning.optimize(postData);
-//            should.exist(res);
-//            should.exist(res.gain);
-//            should.exist(res.path);
-//        }
+//        it('must sort flight by duration', function () {
+//            var res = planning.optimize(data2);
+//        });
+////
+        it('should return gain and path', function () {
+                console.log(dataOver);
+                var res = planning.optimize(dataOver);
+                should.exist(res);
+                should.exist(res.gain);
+                should.exist(res.path);
+            }
         );
-
+//
 //        it('should return the flight if only one', function () {
 //            var data = [
 //                {VOL:"AF514", "DEPART":0, "DUREE":5, "PRIX":10}
@@ -135,14 +143,14 @@ describe('planning', function () {
 //        });
 //
 //        it('should return the best gain', function () {
-//            var res = planning.optimize(postData);
+//            var res = planning.optimize(data);
 //            should.exist(res);
 //            res.gain.should.eql(18);
 //            res.path.should.eql(["MONAD42", "LEGACY01"]);
 //        });
 //
 //        it('should return complex path', function () {
-//            var res = planning.optimize(postData2);
+//            var res = planning.optimize(data2);
 //            should.exist(res);
 //            res.gain.should.eql(12);
 //            res.path.should.eql(["AF1", "AF3", "AF2"]);
@@ -150,14 +158,14 @@ describe('planning', function () {
 //
 //
 //        it('should return path the good way', function () {
-//            var res = planning.optimize(postData2);
+//            var res = planning.optimize(data2);
 //            should.exist(res);
 //            res.gain.should.eql(12);
 //            res.path.should.eql(["AF1", "AF3", "AF2"]);
 //            res.path.should.not.eql(["AF1", "AF2", "AF3"]);
 //        });
 //        it('should handle 15 flights', function () {
-//            var res = planning.optimize(yvesData);
+//            var res = planning.optimize(data3);
 //            res.gain.should.eql(37);
 //            res.path.should.eql(['glamorous-armada-16', 'busy-mailman-46', 'nice-flea-3']);
 //        });
@@ -174,24 +182,25 @@ describe('planning', function () {
 //        });
 
         it('should handle a lot of flights'//, function () {
-//            var flights = [];
-//            // Génération des vols
-//            for (var i = 0; i < 500; i++) {
-//                var f = {
-//                    "VOL":"flight-" + i,
-//                    "DEPART":Math.floor((Math.random() * 24) + 1),
-//                    "DUREE":Math.floor((Math.random() * 22) + 1),
-//                    "PRIX":Math.floor((Math.random() * 30) + 1)
-//                };
-//                flights.push(f);
-//            }
-//            var start = Date.now();
-//            var res = planning.optimize(flights);
-//            should.exist(res);
+//                var flights = [];
+//                // Génération des vols
+//                for (var i = 0; i < 50000; i++) {
+//                    var f = {
+//                        "VOL":"flight-" + i,
+//                        "DEPART":Math.floor((Math.random() * 24) + 1),
+//                        "DUREE":Math.floor((Math.random() * 22) + 1),
+//                        "PRIX":Math.floor((Math.random() * 30) + 1)
+//                    };
+//                    flights.push(f);
+//                }
+//                var start = Date.now();
+//                var res = planning.optimize(flights);
+//                should.exist(res);
 //
-//            console.log('Traitement de 50 000 vols : ' + (Date.now() - start) + 'ms');
-//            console.log(res);
-//        }
+//                console.log('Traitement de 50 000 vols : ' + (Date.now() - start) + 'ms');
+//
+//                console.log(res);
+//            }
         );
     });
 });
