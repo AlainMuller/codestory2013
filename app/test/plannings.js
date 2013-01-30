@@ -25,10 +25,10 @@ var data2 = [
 ];
 
 var dataOver = [
-    { "VOL":"glamorous-armada-16", "DEPART":2, "DUREE":4, "PRIX":10 },
-    { "VOL":"busy-mailman-46", "DEPART":7, "DUREE":6, "PRIX":23 },
-    { "VOL":"nice-flea-3", "DEPART":13, "DUREE":6, "PRIX":4 },
-    { "VOL":"nice-beehive-86", "DEPART":11, "DUREE":9, "PRIX":15 }
+    { "VOL":"armada", "DEPART":2, "DUREE":6, "PRIX":10 },
+    { "VOL":"mailman", "DEPART":7, "DUREE":6, "PRIX":23 },
+    { "VOL":"flea", "DEPART":13, "DUREE":6, "PRIX":4 },
+    { "VOL":"beehive", "DEPART":11, "DUREE":9, "PRIX":15 }
 ];
 
 var data3 = [
@@ -102,105 +102,98 @@ var data5 = [
 
 describe('planning', function () {
     // Génération d'un gros paquet de vols =)
-//    var flights = [];
-//    before(function () {
-//        // Génération des vols
-//        for (var i = 0; i < 50; i++) {
-//            var f = {
-//                "VOL":"flight-" + i,
-//                "DEPART":Math.floor((Math.random() * 24) + 1),
-//                "DUREE":Math.floor((Math.random() * 20) + 1),
-//                "PRIX":Math.floor((Math.random() * 100) + 1)
-//            };
-//            flights.push(f);
-//        }
-//        console.log(flights.length + " vols générés! =)");
-//    });
+    var flights = [];
+    before(function () {
+        // Génération des vols
+        for (var i = 0; i < 500000; i++) {
+            var f = {
+                "VOL":"flight-" + i,
+                "DEPART":Math.floor((Math.random() * 24) + 1),
+                "DUREE":Math.floor((Math.random() * 20) + 1),
+                "PRIX":Math.floor((Math.random() * 100) + 1)
+            };
+            flights.push(f);
+        }
+        console.log(flights.length + " vols générés! =)");
+    });
 
     describe('#optimize', function () {
 
-//        it('must sort flight by duration', function () {
-//            var res = planning.optimize(data2);
-//        });
-////
         it('should return gain and path', function () {
-                console.log(dataOver);
-                var res = planning.optimize(dataOver);
+                var res = planning.optimize(data);
                 should.exist(res);
                 should.exist(res.gain);
                 should.exist(res.path);
             }
         );
-//
-//        it('should return the flight if only one', function () {
-//            var data = [
-//                {VOL:"AF514", "DEPART":0, "DUREE":5, "PRIX":10}
-//            ];
-//            var res = planning.optimize(data);
-//            should.exist(res);
-//            res.gain.should.eql(10);
-//            res.path.should.eql(["AF514"]);
-//        });
-//
-//        it('should return the best gain', function () {
-//            var res = planning.optimize(data);
-//            should.exist(res);
-//            res.gain.should.eql(18);
-//            res.path.should.eql(["MONAD42", "LEGACY01"]);
-//        });
-//
-//        it('should return complex path', function () {
-//            var res = planning.optimize(data2);
-//            should.exist(res);
-//            res.gain.should.eql(12);
-//            res.path.should.eql(["AF1", "AF3", "AF2"]);
-//        });
-//
-//
-//        it('should return path the good way', function () {
-//            var res = planning.optimize(data2);
-//            should.exist(res);
-//            res.gain.should.eql(12);
-//            res.path.should.eql(["AF1", "AF3", "AF2"]);
-//            res.path.should.not.eql(["AF1", "AF2", "AF3"]);
-//        });
-//        it('should handle 15 flights', function () {
-//            var res = planning.optimize(data3);
-//            res.gain.should.eql(37);
-//            res.path.should.eql(['glamorous-armada-16', 'busy-mailman-46', 'nice-flea-3']);
-//        });
-//        it('should handle 20 flights', function () {
-//            var res = planning.optimize(bigPostData);
-//            should.exist(res);
-//            res.gain.should.eql(129);
-//            res.path.should.eql(['flat-vegetarian-72', 'exuberant-tin-51', 'fragile-bandana-18', 'big-shoestring-24', 'precious-recipe-48', 'blue-eyed-movement-71', 'cloudy-tigress-54']);
-//        });
-//        it('should handle 25 flights', function () {
-//            var res = planning.optimize(veryBigPostData);
-//            res.gain.should.eql(102);
-//            res.path.should.eql(['muddy-grapevine-46', 'disgusted-blackhead-11', 'soft-cactus-70', 'helpful-ammonia-48', 'frightened-utensil-39', 'short-pensioner-32']);
-//        });
 
-        it('should handle a lot of flights'//, function () {
-//                var flights = [];
-//                // Génération des vols
-//                for (var i = 0; i < 50000; i++) {
-//                    var f = {
-//                        "VOL":"flight-" + i,
-//                        "DEPART":Math.floor((Math.random() * 24) + 1),
-//                        "DUREE":Math.floor((Math.random() * 22) + 1),
-//                        "PRIX":Math.floor((Math.random() * 30) + 1)
-//                    };
-//                    flights.push(f);
-//                }
-//                var start = Date.now();
-//                var res = planning.optimize(flights);
-//                should.exist(res);
-//
-//                console.log('Traitement de 50 000 vols : ' + (Date.now() - start) + 'ms');
-//
-//                console.log(res);
-//            }
+        it('should return the flight if only one', function () {
+            var data = [
+                {VOL:"AF514", "DEPART":0, "DUREE":5, "PRIX":10}
+            ];
+            var res = planning.optimize(data);
+            should.exist(res);
+            res.gain.should.eql(10);
+            res.path.should.eql(["AF514"]);
+        });
+
+        it('should return the best gain', function () {
+            var res = planning.optimize(data);
+            should.exist(res);
+            res.gain.should.eql(18);
+            res.path.should.eql(["MONAD42", "LEGACY01"]);
+        });
+
+        it('should return complex path', function () {
+            var res = planning.optimize(data2);
+            should.exist(res);
+            res.gain.should.eql(12);
+            res.path.should.eql(["AF1", "AF3", "AF2"]);
+        });
+
+        it('should treat overriding flights', function () {
+            var res = planning.optimize(dataOver);
+            should.exist(res);
+            res.gain.should.eql(27);
+            res.path.should.eql(['mailman', 'flea' ]);
+        });
+
+
+        it('should return path the good way', function () {
+            var res = planning.optimize(data2);
+            should.exist(res);
+            res.gain.should.eql(12);
+            res.path.should.eql(["AF1", "AF3", "AF2"]);
+            res.path.should.not.eql(["AF1", "AF2", "AF3"]);
+        });
+
+        it('should handle 15 flights', function () {
+            var res = planning.optimize(data3);
+            res.gain.should.eql(37);
+            res.path.should.eql(['glamorous-armada-16', 'busy-mailman-46', 'nice-flea-3']);
+        });
+
+        it('should handle 20 flights', function () {
+            var res = planning.optimize(data4);
+            should.exist(res);
+            res.gain.should.eql(129);
+            res.path.should.eql(['flat-vegetarian-72', 'exuberant-tin-51', 'fragile-bandana-18', 'big-shoestring-24', 'precious-recipe-48', 'blue-eyed-movement-71', 'cloudy-tigress-54']);
+        });
+
+        it('should handle 25 flights', function () {
+            var res = planning.optimize(data5);
+            res.gain.should.eql(102);
+            res.path.should.eql(['muddy-grapevine-46', 'disgusted-blackhead-11', 'soft-cactus-70', 'helpful-ammonia-48', 'frightened-utensil-39', 'short-pensioner-32']);
+        });
+
+        it('should handle a lot of flights', function () {
+                var start = Date.now();
+                var res = planning.optimize(flights);
+                should.exist(res);
+
+                console.log('\nTraitement de 50000 vols : ' + (Date.now() - start) + 'ms');
+                console.log(res);
+            }
         );
     });
 });
