@@ -53,16 +53,16 @@ var server = http.createServer(function (request, response) {
                 });
                 request.on('end', function () {
                     postRequest = JSON.parse(body);
-                    util.log("Requête POST : " + body);
-                    // Sauvegarde des données de la requête POST dans un fichier de log
-                    util.logData(request, body);
+                    //util.log("Requête POST : " + body);
+                    // Sauvegarde des données de la requête POST dans un fichier de log -- en fait non, ça risque de faire beaucoup pour 10000 vols :p
+                    //util.logData(request, body);
 
                     //
                     // Cas de l'énoncé 2 : jajascript (ex: /jajascript/optimize avec param `{"[ {VOL:"AF514", DEPART:0, DUREE:5, PRIX: 10} ]}`)
                     //
 
                     if ((params[1] == "jajascript") && (params[2] == "optimize")) {
-                        util.log("Calcul du meilleur planning pour " +  postRequest.length + " vols : ");
+                        util.log("Calcul du meilleur planning pour " + postRequest.length + " vols : ");
 
                         var bestPlanning = planning.optimize(postRequest);
                         var tps = Date.now() - start;
