@@ -10,7 +10,7 @@
 var Flight = function(nom, depart, duree, prix) {
     this.nom = nom;
     this.depart = depart;
-    this.fin = depart + duree;
+    this.arrivee = depart + duree;
     this.duree = duree;
     this.prix = prix;
 };
@@ -27,7 +27,7 @@ Flight.prototype = {
     nom: "default_value",
     depart: 0,
     duree: 0,
-    fin: 0,
+    arrivee: 0,
     prix: 0,
 
     // Setters
@@ -39,7 +39,7 @@ Flight.prototype = {
     },
     setDuree: function(duree) {
         this.duree = duree;
-        this.fin = this.depart + duree;
+        this.arrivee = this.depart + duree;
     },
     setPrix: function(prix) {
         this.prix = prix;
@@ -49,8 +49,8 @@ Flight.prototype = {
         return this.prix >= flight.prix;
     },
     overrides: function(flight) {
-        return (((flight.depart >= this.depart) && flight.depart < this.fin)
-                || ((flight.fin > this.depart) && (flight.fin <= this.fin)))
+        return (((flight.depart >= this.depart) && flight.depart < this.arrivee)
+                || ((flight.arrivee > this.depart) && (flight.arrivee <= this.arrivee)))
     }
 
 };

@@ -21,14 +21,14 @@ describe('Flight', function () {
             flightMONADE42.nom.should.eql("MONADE42");
             flightMONADE42.depart.should.eql(0);
             flightMONADE42.duree.should.eql(5);
-            flightMONADE42.fin.should.eql(5);
+            flightMONADE42.arrivee.should.eql(5);
             flightMONADE42.prix.should.eql(10);
         });
         it('should take 4 parameters', function () {
             should.not.exist(new flight.Flight().nom);
             should.not.exist(new flight.Flight().depart);
             should.not.exist(new flight.Flight().duree);
-            //should.not.exist(new flight.Flight().fin);
+            //should.not.exist(new flight.Flight().arrivee);
             should.not.exist(new flight.Flight().prix);
         });
     });

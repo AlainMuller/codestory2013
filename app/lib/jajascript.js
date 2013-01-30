@@ -16,10 +16,10 @@ var util = require(__dirname + '/../lib/util');
 var flight = require(__dirname + '/../lib/flight');
 var planning = require(__dirname + '/../lib/planning');
 
-// Fonction de comparaison personnalisée permettant de trier les vols par date de départ et date de fin en cas d'égalité
+// Fonction de comparaison personnalisée permettant de trier les vols par date de départ et date d'arrivée en cas d'égalité
 var compareFlights = function (flight1, flight2) {
     if (flight1.depart == flight2.depart)
-        return flight2.fin - flight1.fin;
+        return flight2.arrivee - flight1.arrivee;
     return flight1.depart - flight2.depart;
 };
 
@@ -28,7 +28,7 @@ var compareFlights = function (flight1, flight2) {
 //  et que la durée du planning de référence empiète sur le départ suivant
 var filterGoodOnes = function (reference, departSuivant) {
     return function (planning) {
-        //return (planning.gain >= reference.gain || (reference.fin > planning.fin || reference.fin > departSuivant))
+        //return (planning.gain >= reference.gain || (reference.arrivee > planning.arrivee || reference.arrivee > departSuivant))
         if (planning.gain < reference.gain && (planning.end >= reference.end || reference.end <= departSuivant)) {
             return false;
         }
@@ -99,7 +99,7 @@ var optimize = function (inputArray) {
                     // Mise à jour de la liste des plannings avec le nouveau planning de référence
                     plannings.push(meilleurPlanning);
                 }
-                else if (meilleurPlanning.fin < reference.fin) {
+                else if (meilleurPlanning.arrivee < reference.arrivee) {
                     // Le planning est valide, bien que (pour l'instant) non préférenciable, on l'ajoute donc à la liste
                     plannings.push(meilleurPlanning)
                 }
