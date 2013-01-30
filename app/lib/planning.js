@@ -53,7 +53,7 @@ var optimize = function (inputArray) {
 
     start = new Date().getTime();
 
-    var planningOptimal = {gain:0, path:[]};
+
     var planningOptimalParHeure = {};
     /* 3 - Parcourir les vols par heure: */
     for (var heure in mapVolsParHeure) {
@@ -64,69 +64,51 @@ var optimize = function (inputArray) {
         // Filtrage des clés (heures) par rapport au reste du prototype d'Object
 //        if (mapVolsParHeure.hasOwnProperty(heure)) {
         // Parcours de toutes les vols de chaque heure
-        for (var vol in mapVolsParHeure[heure]) {
-            console.log("   > # Vol : " + vol);
+        for (var indexVol in mapVolsParHeure[heure]) {
+            console.log("   > # Vol : " + indexVol);
             // On détermine l'heure minimale de départ par rapport à cette heure (cf. 1bis)
-            var departMinimum = mapVolsParHeure[heure][vol].depart - volLePlusLong.duree;
+            const vol = mapVolsParHeure[heure][indexVol];
+            var departMinimum = Math.max(0, vol.depart - volLePlusLong.duree);
 
             /* 4 - Pour chaque vol, trouver parmi les heures précédentes* le vol à conserver pour avoir le meilleur gain */
-            // TODO : <= ou < ???
-            for (var h = departMinimum; h <= mapVolsParHeure[heure][vol].depart; h++) {
-
-//                console.log("    > heure précedente : " + h);
+            for (var heurePrecedente = departMinimum; heurePrecedente <= vol.depart; heurePrecedente++) {
 
                 // On boucle sur tous les vols précédents possibles pour déterminer celui qui aura le meilleur gain cumulé
-                var tmpPlanning;
-//                    if (mapVolsParHeure.hasOwnProperty(h)) {
-                // On récupère le vol le plus intéressant pour l'heure précédente
-                //      /!\ on peut avoir des heures négatives, on test donc kl'existence de ces heures
-                if (planningOptimalParHeure.hasOwnProperty(h)) {
-                    tmpPlanning = planningOptimalParHeure[h];
-//                    console.log("tmpPlanning : " + JSON.stringify(tmpPlanning));
+                var meilleurPlanningHeurePrecedente;
+                if (planningOptimalParHeure[heurePrecedente] != undefined) {
+                    meilleurPlanningHeurePrecedente = planningOptimalParHeure[heurePrecedente];
+                } else {
+                    meilleurPlanningHeurePrecedente = {gain:0, path:[]};
                 }
 
-                // Si on a déjà un planning optimal pour cette heure,
-                if (tmpPlanning) {
-                    // On va s'assurer que le vol actuel n'empiète pas sur le planning
-                    if (mapVolsParHeure[heure][vol].depart <= tmpPlanning.path[tmpPlanning.path.length - 1].arrivee) {
-                        console.log(" ! ! ! Le vol " + mapVolsParHeure[heure][vol].nom + " empiète sur : " + tmpPlanning.path[tmpPlanning.path.length - 1].nom);
-                    }
+                const gainCumule = meilleurPlanningHeurePrecedente.gain + vol.prix;
+                const pathCumule = meilleurPlanningHeurePrecedente.path.concat(vol);
 
-                }
-
-
-                var gainCumule = (tmpPlanning ? tmpPlanning.gain : 0) + mapVolsParHeure[heure][vol].prix;
-                var pathCumule = (tmpPlanning ? tmpPlanning.path : []).concat(mapVolsParHeure[heure][vol]);
-
-                console.log("    > " + heure + " / " + mapVolsParHeure[heure][vol].nom + " > gain cumulé : " + gainCumule + " -  Path : " + JSON.stringify(pathCumule));
+                console.log("    > " + heure + " / " + vol.nom + " > gain cumulé : " + gainCumule + " -  Path : " + JSON.stringify(pathCumule));
 
                 if (gainCumule > planningOptimalPourCetteHeure.gain) {
-                    planningOptimalPourCetteHeure.gain = gainCumule;
-                    planningOptimalPourCetteHeure.path = pathCumule;
+                    planningOptimalPourCetteHeure = {gain: gainCumule, path: pathCumule}
                     console.log("    > planningOptimalPourCetteHeure : " + JSON.stringify(planningOptimalPourCetteHeure));
                 }
 
-//                    }
             }
 
         }
         // Mise à jour du vol optimal par heure
         planningOptimalParHeure[heure] = planningOptimalPourCetteHeure;
-
-        // Mise à jour du meilleur planning global
-        if (planningOptimalPourCetteHeure.gain > planningOptimal.gain) {
-            planningOptimal = planningOptimalPourCetteHeure;
-        }
-//        }
-
     }
 
 
     console.log("\n\n Heures : \n -------- \n");
+    var planningOptimal = {gain:0, path:[]};
     for (var heure in planningOptimalParHeure)
     {
         console.log(heure);
-        console.log(planningOptimalParHeure[heure]);
+        const optimalParHeure = planningOptimalParHeure[heure];
+        console.log(optimalParHeure);
+        if(optimalParHeure.gain > planningOptimal.gain) {
+            planningOptimal = optimalParHeure;
+        }
     }
 
     console.log("\n\n RESULTAT : \n ---------- \n");

@@ -15,7 +15,7 @@ var change = require(__dirname + "/lib/change");
 var util = require(__dirname + "/lib/util");
 var routes = require(__dirname + "/lib/routes.js");
 var infix = require(__dirname + "/lib/infix.js");
-var jajascript = require(__dirname + "/lib/jajascript");
+var jajascript = require(__dirname + "/lib/planning");
 
 // Chargement de l'objet JSON (association requête(URL) / réponse au format JSON)
 var queries = require(__dirname + "/res/queries.json");
@@ -70,7 +70,7 @@ var server = http.createServer(function (request, response) {
 
                         if (bestPlanning != undefined) {
                             util.log(" > Réponse : " + JSON.stringify(bestPlanning));
-                            response.writeHead(201, {"Content-Type":"text/plain;charset=utf-8"});
+                            response.writeHead(201, {"Content-Type":"application/json;charset=utf-8"});
                             response.end(JSON.stringify(bestPlanning));
                         }
                         else {
@@ -81,7 +81,7 @@ var server = http.createServer(function (request, response) {
                     }
                     else {
                         // Ecriture de l'En-tête HTTP (201 : Status CREATED)
-                        response.writeHead(201, {"Content-Type":"text/plain;charset=utf-8"});
+                        response.writeHead(201, {"Content-Type":"application/json;charset=utf-8"});
                         response.end("Data saved! ;)");
                     }
                 });
@@ -143,7 +143,7 @@ var server = http.createServer(function (request, response) {
                         var tps = Date.now() - start;
                         util.log(" > Temps de traitement : " + tps + "ms");
 
-                        response.writeHead(200, {"Content-Type":"text/plain;charset=utf-8"});
+                        response.writeHead(200, {"Content-Type":"text/json;charset=utf-8"});
                         response.end(JSON.stringify(message));
                     }
 
